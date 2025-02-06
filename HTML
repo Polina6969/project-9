@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра на реакцию</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; margin-top: 50px; }
+        button { width: 200px; height: 100px; font-size: 18px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Игра на реакцию</h1>
+    <button id="btn">Начать</button>
+    <p id="msg"></p>
+
+    <script>
+        let btn = document.getElementById("btn"), msg = document.getElementById("msg"), start, times = [];
+        
+        btn.onclick = () => {
+            if (btn.style.background === "green") {
+                let time = Date.now() - start;
+                times.push(time);
+                msg.textContent = `Время: ${time} мс | Среднее: ${Math.round(times.reduce((a, b) => a + b) / times.length)} мс`;
+                btn.textContent = "Начать заново";
+                btn.style.background = "";
+            } else {
+                btn.textContent = "Ждите...";
+                btn.style.background = "red";
+                let delay = Math.random() * 3000 + 2000;
+                setTimeout(() => {
+                    btn.textContent = "Жми!";
+                    btn.style.background = "green";
+                    start = Date.now();
+                }, delay);
+            }
+        };
+    </script>
+
+</body>
+</html>
